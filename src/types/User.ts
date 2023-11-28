@@ -10,3 +10,15 @@ export interface User {
   creationAt: string
   updatedAt: string
 }
+
+export interface RegisterValues {
+  name: string
+  email: string
+  password: string
+  avatar: string
+}
+
+export interface SignInValues {
+  email: string
+  password: string
+}

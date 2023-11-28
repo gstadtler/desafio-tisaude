@@ -35,3 +35,20 @@ export enum Filters {
   price = 'PRICE',
   priceRange = 'PRICE RANGE',
 }
+
+export interface CreateProductProps {
+  title: string
+  price: string
+  description: string
+  categoryId: number
+  images: string
+}
+
+export interface UpdateProductProps {
+  id: string
+  title: string
+  price: string
+  description: string
+  categoryId: number
+  images: string[]
+}
