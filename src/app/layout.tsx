@@ -9,10 +9,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
+      <body className="bg-gray-50">
         <NextAuthSessionProvider>
-          <Navbar />
-          {children}
+          <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+            <Navbar />
+            {children}
+          </div>
         </NextAuthSessionProvider>
       </body>
     </html>

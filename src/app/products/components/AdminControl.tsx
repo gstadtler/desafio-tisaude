@@ -1,31 +1,23 @@
 'use client'
-import { useSession } from 'next-auth/react'
-import { isAdmin } from '@/app/helpers/roles'
 import { Product } from '@/types/Products'
 import { deleteProduct } from '@/app/products/lib'
 import { usePathname, useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { useUser } from '@/hooks/useUser'
+import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline'
 
 interface AdminControlProps {
   product?: Product
 }
 
 export function AdminControl({ product }: AdminControlProps) {
-  const session = useSession()
+  const { isAdminUser } = useUser()
   const pathname = usePathname()
   const router = useRouter()
-
-  if (!session) return
-
-  const isAdminUser = session.data && isAdmin(session.data.user.role)
 
   if (!isAdminUser) return
 
   const isProductsPage = pathname === '/products'
-
-  // const handleCreate = async () => console.log('worst')
-
-  // const handleUpdate = async () => console.log('worst')
 
   const handleDelete = async () => {
     if (product) {
@@ -40,27 +32,33 @@ export function AdminControl({ product }: AdminControlProps) {
       {isProductsPage ? (
         <Link
           href="/products/create"
-          className="bg-blue-500 text-white rounded-md p-1"
+          className="bg-indigo-500 text-white rounded-md p-2 font-medium"
         >
           Cadastrar produto
         </Link>
       ) : (
-        <div className="flex gap-3">
-          <Link
-            href={{
-              pathname: '/products/update',
-              query: { product: JSON.stringify(product) },
-            }}
-            className="bg-blue-500 text-white rounded-md p-1"
-          >
-            Editar produto
-          </Link>
-          <button
-            onClick={handleDelete}
-            className="bg-red-500 text-white rounded-md p-1"
-          >
-            Excluir produto
-          </button>
+        <div className="flex gap-6">
+          <div className="flex items-center gap-2 ">
+            <Link
+              href={{
+                pathname: '/products/update',
+                query: { product: JSON.stringify(product) },
+              }}
+              className="text-green-600 font-medium hover:font-bold hover:text-lg"
+            >
+              Editar produto
+            </Link>
+            <PencilIcon className="block h-5 w-5 text-green-600" />
+          </div>
+          <div className="flex items-center gap-2 ">
+            <button
+              onClick={handleDelete}
+              className="text-indigo-600 font-medium hover:font-bold hover:text-lg"
+            >
+              Excluir produto
+            </button>
+            <TrashIcon className="block h-5 w-5 text-indigo-600" />
+          </div>
         </div>
       )}
     </>

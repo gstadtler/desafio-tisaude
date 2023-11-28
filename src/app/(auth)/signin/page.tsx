@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { SigninValidation } from '../validators'
 import { SignInValues } from '@/types/User'
+import { ArrowUturnRightIcon } from '@heroicons/react/24/outline'
 
 export default function SignIn() {
   const router = useRouter()
@@ -42,7 +43,7 @@ export default function SignIn() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-sm w-full space-y-8">
         <div className="">
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
@@ -89,13 +90,17 @@ export default function SignIn() {
           )}
 
           <div className="flex items-center justify-between">
-            <div className="text-sm">
+            <div className="flex items-center gap-2 text-sm">
               <Link
                 href="/register"
                 className="font-medium text-indigo-600 hover:text-indigo-500"
               >
                 Ainda não possui conta? Cadastre-se
               </Link>
+              <ArrowUturnRightIcon
+                className="block h-4 w-4 text-indigo-600"
+                aria-hidden="true"
+              />
             </div>
           </div>
 

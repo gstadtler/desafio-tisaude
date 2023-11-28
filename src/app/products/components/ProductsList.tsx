@@ -6,11 +6,14 @@ interface ProductsListProps {
 }
 
 export function ProductsList({ products }: ProductsListProps) {
-  if (!products?.length) return <p>Nehum resultado foi encontrado</p>
+  if (!products?.length)
+    return (
+      <p className="mt-6 py-16 text-lg">Nehum resultado foi encontrado...</p>
+    )
 
   return (
-    <div className="bg-white">
-      <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+    <div>
+      <div className="mx-auto max-w-2xl px-4 py-8 sm:px-6 sm:py-8 lg:max-w-7xl lg:px-8">
         <h2 className="text-2xl font-bold tracking-tight text-gray-900">
           Produtos
         </h2>

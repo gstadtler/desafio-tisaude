@@ -7,7 +7,7 @@ import { RegisterValidation } from '../validators'
 import { RegisterValues } from '@/types/User'
 import { register as registerUser } from '../lib'
 import Link from 'next/link'
-import { Dropzone } from '@/components/Dropzone'
+import { ArrowUturnLeftIcon } from '@heroicons/react/24/outline'
 
 export default function Register() {
   const router = useRouter()
@@ -45,7 +45,7 @@ export default function Register() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-sm w-full space-y-8">
         <div className="">
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
@@ -57,9 +57,6 @@ export default function Register() {
           onSubmit={handleSubmit(handleRegister)}
         >
           <div className="rounded-md shadow-sm -space-y-px">
-            <div>
-              <Dropzone className="mt-10 border border-neutral-200 p-16" />
-            </div>
             <div>
               <input
                 {...register('name')}
@@ -115,7 +112,7 @@ export default function Register() {
                 type="avatar"
                 autoComplete="avatar"
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Avatar"
+                placeholder="Insira um link para a imagem do seu avatar"
               />
               {errors.avatar && (
                 <p className="text-sm text-red-500 p-1">
@@ -126,7 +123,11 @@ export default function Register() {
           </div>
 
           <div className="flex items-center justify-between">
-            <div className="text-sm">
+            <div className="flex items-center gap-2 text-sm">
+              <ArrowUturnLeftIcon
+                className="block h-4 w-4 text-indigo-600"
+                aria-hidden="true"
+              />
               <Link
                 href="/signin"
                 className="font-medium text-indigo-600 hover:text-indigo-500"

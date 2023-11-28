@@ -28,6 +28,7 @@ export function CategoryOptions() {
 
   return (
     <>
+      <label className="text-sm text-gray-500 pr-2">Categoria</label>
       <select onChange={(e) => field.onChange(e)} value={field.value}>
         {categories.map((category) => (
           <option key={category.id} value={category.id}>
