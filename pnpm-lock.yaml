@@ -2,6 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@headlessui/react': ^1.7.17
+  '@heroicons/react': ^2.0.18
   '@hookform/resolvers': ^3.3.2
   '@rocketseat/eslint-config': ^2.1.0
   '@types/node': ^20
@@ -24,6 +25,7 @@ specifiers:
 
 dependencies:
   '@headlessui/react': 1.7.17_biqbaboplfbrettd7655fr4n2y
+  '@heroicons/react': 2.0.18_react@18.2.0
   '@hookform/resolvers': 3.3.2_react-hook-form@7.48.2
   axios: 1.6.2
   next: 14.0.3_biqbaboplfbrettd7655fr4n2y
@@ -111,6 +113,14 @@ packages:
       client-only: 0.0.1
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
+    dev: false
+
+  /@heroicons/react/2.0.18_react@18.2.0:
+    resolution: {integrity: sha512-7TyMjRrZZMBPa+/5Y8lN0iyvUU/01PeMGX2+RE7cQWpEUIcb4QotzUObFkJDejj/HUH4qjP/eQ0gzzKs2f+6Yw==}
+    peerDependencies:
+      react: '>= 16'
+    dependencies:
+      react: 18.2.0
     dev: false
 
   /@hookform/resolvers/3.3.2_react-hook-form@7.48.2:
