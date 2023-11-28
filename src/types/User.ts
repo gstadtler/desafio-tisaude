@@ -22,3 +22,11 @@ export interface SignInValues {
   email: string
   password: string
 }
+
+export interface UpdateUser {
+  email: string
+  password: string
+  name: string
+  role: string
+  avatar: string
+}

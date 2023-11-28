@@ -1,5 +1,4 @@
 import axios, { AxiosRequestConfig } from 'axios'
-import { addAuthentication } from './helpers/addAuthentication'
 
 const baseURL = process.env.NEXT_PUBLIC_BASE_API_URL
 

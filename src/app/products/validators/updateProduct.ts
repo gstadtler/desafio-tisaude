@@ -8,5 +8,5 @@ export const UpdateProductValidation = () =>
       .matches(/^[0-9]+$/, 'Preencha apenas com números'),
     description: string().required('Campo obrigatório'),
     categoryId: number().required('Campo obrigatório'),
-    images: array().of(string()).required('Campo obrigatório'),
+    images: array().of(string().required()).required('Campo obrigatório'),
   })

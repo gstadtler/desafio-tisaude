@@ -1,8 +1,11 @@
+interface PriceRange {
+  minPrice: string
+  maxPrice: string
+}
 export interface FilterBy {
   title: string
   price: string
-  minPrice: string
-  maxPrice: string
+  priceRange: PriceRange
 }
 
 export interface Category {
@@ -45,7 +48,6 @@ export interface CreateProductProps {
 }
 
 export interface UpdateProductProps {
-  id: string
   title: string
   price: string
   description: string
