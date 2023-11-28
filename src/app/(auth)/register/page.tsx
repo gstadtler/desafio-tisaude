@@ -1,21 +1,25 @@
 'use client'
-import { apiFetch } from '@/services/api'
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
-// import { LockClosedIcon } from '@heroicons/react/solid'
-// import { AuthContext } from '../contexts/AuthContext'
-
-interface RegisterValues {
-  name: string
-  email: string
-  password: string
-  avatar: string
-}
+import { yupResolver } from '@hookform/resolvers/yup'
+import { RegisterValidation } from '../validators'
+import { RegisterValues } from '@/types/User'
+import { register as registerUser } from '../lib'
+import Link from 'next/link'
+import { Dropzone } from '@/components/Dropzone'
 
 export default function Register() {
   const router = useRouter()
-  const { register, handleSubmit } = useForm<RegisterValues>()
+  const validation = RegisterValidation()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<RegisterValues>({
+    resolver: yupResolver(validation),
+    mode: 'onChange',
+  })
 
   async function handleSignIn({ email, password }: Partial<RegisterValues>) {
     const response = await signIn('credentials', {
@@ -32,25 +36,11 @@ export default function Register() {
     router.replace('/')
   }
 
-  async function handleRegister({
-    name,
-    email,
-    password,
-    avatar,
-  }: RegisterValues) {
-    const response = await apiFetch({
-      url: '/users/',
-      method: 'POST',
-      data: {
-        name,
-        email,
-        password,
-        avatar,
-      },
-    })
+  async function handleRegister(values: RegisterValues) {
+    const response = await registerUser({ payload: values })
 
-    if (response.status === 200) {
-      handleSignIn({ email, password })
+    if (response?.status === 201) {
+      handleSignIn({ email: values.email, password: values.password })
     }
   }
 
@@ -66,67 +56,83 @@ export default function Register() {
           className="mt-8 space-y-6"
           onSubmit={handleSubmit(handleRegister)}
         >
-          <input type="hidden" name="remember" defaultValue="true" />
           <div className="rounded-md shadow-sm -space-y-px">
             <div>
-              <label htmlFor="email-address" className="sr-only">
-                Nome
-              </label>
+              <Dropzone className="mt-10 border border-neutral-200 p-16" />
+            </div>
+            <div>
               <input
                 {...register('name')}
                 id="name"
                 name="name"
                 type="name"
                 autoComplete="name"
-                required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="Name"
               />
+              {errors.name && (
+                <p className="text-sm text-red-500 p-1">
+                  {errors.name.message}
+                </p>
+              )}
             </div>
             <div>
-              <label htmlFor="email-address" className="sr-only">
-                Email
-              </label>
               <input
                 {...register('email')}
                 id="email"
                 name="email"
-                type="email"
                 autoComplete="email"
-                required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="Email"
               />
+              {errors.email && (
+                <p className="text-sm text-red-500 p-1">
+                  {errors.email.message}
+                </p>
+              )}
             </div>
             <div>
-              <label htmlFor="password" className="sr-only">
-                Password
-              </label>
               <input
                 {...register('password')}
                 id="password"
                 name="password"
                 type="password"
                 autoComplete="current-password"
-                required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="Senha"
               />
+              {errors.password && (
+                <p className="text-sm text-red-500 p-1">
+                  {errors.password.message}
+                </p>
+              )}
             </div>
             <div>
-              <label htmlFor="avatar" className="sr-only">
-                Avatar
-              </label>
               <input
                 {...register('avatar')}
                 id="avatar"
                 name="avatar"
                 type="avatar"
                 autoComplete="avatar"
-                required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="Avatar"
               />
+              {errors.avatar && (
+                <p className="text-sm text-red-500 p-1">
+                  {errors.avatar.message}
+                </p>
+              )}
+            </div>
+          </div>
+
+          <div className="flex items-center justify-between">
+            <div className="text-sm">
+              <Link
+                href="/signin"
+                className="font-medium text-indigo-600 hover:text-indigo-500"
+              >
+                Voltar para Login
+              </Link>
             </div>
           </div>
 
