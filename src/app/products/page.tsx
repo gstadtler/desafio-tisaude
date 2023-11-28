@@ -1,9 +1,14 @@
 'use client'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { FilterBy, Filters, Product } from '@/types/Products'
-import { useEffect, useState } from 'react'
-import { filter, getProducts } from '../libs'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import { filter, getProducts } from './lib'
 import { ProductsList } from './components/ProductsList'
+import { AdminControl } from './components/AdminControl'
+
+interface FilterByPriceRangeProps {
+  setProducts: Dispatch<SetStateAction<Product[]>>
+}
 
 export default function Products() {
   const [products, setProducts] = useState([] as Product[])
@@ -38,9 +43,9 @@ export default function Products() {
   }
 
   const handleCleanupFilters = async () => {
+    reset()
     const data = await getProducts()
     if (data) setProducts(data)
-    reset()
   }
 
   return (
@@ -54,26 +59,35 @@ export default function Products() {
         <div>
           <button onClick={handleCleanupFilters}>clean filter</button>
         </div>
-        <FilterByPriceRange />
+        <FilterByPriceRange setProducts={setProducts} />
+      </div>
+      <div className="flex justify-end">
+        <AdminControl />
       </div>
       <ProductsList products={products} />
     </>
   )
 }
 
-function FilterByPriceRange() {
+function FilterByPriceRange({ setProducts }: FilterByPriceRangeProps) {
   const { register, handleSubmit, reset } = useForm<FilterBy>()
 
   const onSubmit: SubmitHandler<FilterBy> = async ({ minPrice, maxPrice }) => {
-    console.log(
-      '🚀 ~ file: FilterBar.tsx:10 ~ FilterBar ~ title, price:',
-      minPrice,
-      maxPrice,
-    )
+    const filteredData = await filter({
+      filterBy: Filters.priceRange,
+      filterValue: {
+        firstValue: minPrice,
+        secondValue: maxPrice,
+      },
+    })
+
+    if (filteredData) setProducts(filteredData)
   }
 
-  const handleCleanupFilters = () => {
+  const handleCleanupFilters = async () => {
     reset()
+    const data = await getProducts()
+    if (data) setProducts(data)
   }
 
   return (
